@@ -1,14 +1,16 @@
 import java.util.*;
 
 class User {
-    private String username;
-    private String password;
+    private String username; 
+    private String password; 
 
+  
     public User(String username, String password) {
         this.username = username;
         this.password = password;
     }
 
+    
     public String getUsername() {
         return username;
     }
@@ -19,10 +21,10 @@ class User {
 }
 
 class Product {
-    private int id;
+    private int id; 
     private String name;
     private double price;
-    private int stock;
+    private int stock; 
     private List<String> reviews;
 
     public Product(int id, String name, double price, int stock) {
@@ -54,13 +56,14 @@ class Product {
     }
 
     public void addReview(String review) {
-        reviews.add(review);
+        reviews.add(review); 
     }
 
     public List<String> getReviews() {
-        return reviews;
+        return reviews; 
     }
 
+   
     @Override
     public String toString() {
         return "Product ID: " + id + ", Name: " + name + ", Price: $" + price + ", Stock: " + stock;
@@ -69,7 +72,7 @@ class Product {
 
 class CartItem {
     private Product product;
-    private int quantity;
+    private int quantity; 
 
     public CartItem(Product product, int quantity) {
         this.product = product;
@@ -84,19 +87,22 @@ class CartItem {
         return quantity;
     }
 
+    
     public double getTotalPrice() {
-        return product.getPrice() * quantity;
+        return product.getPrice() * quantity; 
     }
 
+    
     @Override
     public String toString() {
         return product.getName() + " x " + quantity + " = $" + String.format("%.2f", getTotalPrice());
     }
 }
 
+
 class Cart {
     private List<CartItem> items;
-
+    
     public Cart() {
         items = new ArrayList<>();
     }
@@ -111,33 +117,32 @@ class Cart {
         System.out.println("Added " + quantity + " x " + product.getName() + " to the cart.");
     }
 
+    
     public double getTotal() {
-        return items.stream().mapToDouble(CartItem::getTotalPrice).sum();
+        return items.stream().mapToDouble(CartItem::getTotalPrice).sum(); 
     }
-
     public void displayCart() {
         if (items.isEmpty()) {
             System.out.println("Cart is empty.");
             return;
         }
-        items.forEach(System.out::println);
-        System.out.println("Total: $" + String.format("%.2f", getTotal()));
+        items.forEach(System.out::println); 
+        System.out.println("Total: $" + String.format("%.2f", getTotal())); 
     }
 
+  
     public void clearCart() {
-        items.clear();
+        items.clear(); 
     }
 }
 
 public class Shopymerce {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        List<User> users = new ArrayList<>();
+        List<User> users = new ArrayList<>(); 
         List<Product> products = new ArrayList<>();
-        Cart cart = new Cart();
-        User currentUser = null;
-
-        // Adding sample products
+        Cart cart = new Cart(); 
+        User currentUser = null; 
         products.add(new Product(1, "Laptop", 1000.00, 10));
         products.add(new Product(2, "Smartphone", 700.00, 20));
         products.add(new Product(3, "Headphones", 50.00, 100));
@@ -164,7 +169,7 @@ public class Shopymerce {
                         String username = scanner.nextLine();
                         System.out.print("Enter password: ");
                         String password = scanner.nextLine();
-                        users.add(new User(username, password));
+                        users.add(new User(username, password)); 
                         System.out.println("Registration successful!");
                         break;
                     case 2:
@@ -174,7 +179,7 @@ public class Shopymerce {
                         String loginPassword = scanner.nextLine();
                         Optional<User> user = users.stream().filter(u -> u.getUsername().equals(loginUsername) && u.getPassword().equals(loginPassword)).findFirst();
                         if (user.isPresent()) {
-                            currentUser = user.get();
+                            currentUser = user.get(); 
                             System.out.println("Login successful! Welcome, " + currentUser.getUsername());
                         } else {
                             System.out.println("Invalid username or password.");
@@ -187,6 +192,7 @@ public class Shopymerce {
                         System.out.println("Invalid choice. Please try again.");
                 }
             } else {
+                
                 System.out.println("\n1. View Products\n2. Add to Cart\n3. View Cart\n4. Add Product Review\n5. Checkout\n6. Logout\n7. Exit");
                 System.out.print("Choose an option: ");
                 int choice = scanner.nextInt();
@@ -205,7 +211,7 @@ public class Shopymerce {
                         scanner.nextLine();
                         Optional<Product> product = products.stream().filter(p -> p.getId() == productId).findFirst();
                         if (product.isPresent()) {
-                            cart.addProduct(product.get(), quantity);
+                            cart.addProduct(product.get(), quantity); 
                         } else {
                             System.out.println("Invalid Product ID.");
                         }
@@ -214,7 +220,7 @@ public class Shopymerce {
                         System.out.println("\nYour Cart:");
                         cart.displayCart();
                         break;
-                        case 4: // Add or View Product Review
+                    case 4:
                         System.out.print("Enter Product ID to review or view reviews: ");
                         int reviewProductId = scanner.nextInt();
                         scanner.nextLine();
@@ -244,11 +250,10 @@ public class Shopymerce {
                             System.out.println("Invalid Product ID. Please try again.");
                         }
                         break;
-                    
                     case 5:
                         System.out.println("\nCheckout Total: $" + String.format("%.2f", cart.getTotal()));
                         System.out.println("Choose Payment Method:");
-                        System.out.println("1. Credit Card\n2. Debit Card\n.");
+                        System.out.println("1. Credit Card\n2. Debit Card");
                         System.out.print("Select: ");
                         int paymentChoice = scanner.nextInt();
                         scanner.nextLine();
@@ -259,9 +264,8 @@ public class Shopymerce {
                             case 2:
                                 System.out.println("Payment successful via Debit Card. Thank you!");
                                 break;
-                           
                         }
-                        cart.clearCart();
+                        cart.clearCart(); 
                         break;
                     case 6:
                         currentUser = null;
